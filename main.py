@@ -24,3 +24,10 @@ for item in data:
 
     print("Symbol: ", symbol, "{}|  Actual price:".format(
         " "*(biggerSymbol-symbolLength) if symbolLength < biggerSymbol else ""), price)
+
+
+historyRequest = requests.get("https://api.novadax.com/v1/market/kline/history?symbol={}&unit={}&from={}&to={}".format(
+    flagSymbol, flagTime, int(dt.now().timestamp()-86400), int(dt.now().timestamp())))
+historyData = historyRequest.json()['data']
+
+print(json.dumps(historyData, indent=4, sort_keys=True))
