@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime as dt
+from proceduralMethods import *
 
 flagSymbol = "BTC_BRL"
 flagTime = "ONE_HOU"
@@ -28,6 +29,7 @@ for item in data:
 
 historyRequest = requests.get("https://api.novadax.com/v1/market/kline/history?symbol={}&unit={}&from={}&to={}".format(
     flagSymbol, flagTime, int(dt.now().timestamp()-86400), int(dt.now().timestamp())))
-historyData = historyRequest.json()['data']
 
-print(json.dumps(historyData, indent=4, sort_keys=True))
+historyPrices = getHistoryPrices(historyRequest)
+
+print(getMovingAverage(historyPrices, 10))
