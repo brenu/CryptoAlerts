@@ -1,35 +1,28 @@
 import requests
 import json
+import time
+import sys
 from datetime import datetime as dt
 from proceduralMethods import *
 
-flagSymbol = "BTC_BRL"
-flagTime = "ONE_HOU"
+flagSymbols = ["BTC_BRL"]
+flagTimes = ["ONE_HOU"]
+movingAverageWindows = [5, 10, 30, 60, 80]
 
-r = requests.get("https://api.novadax.com/v1/market/tickers")
+while(1):
+    time.sleep(1)
+    for symbol in flagSymbols:
+        try:
+            historyRequest = requests.get("https://api.novadax.com/v1/market/kline/history?symbol={}&unit={}&from={}&to={}".format(
+                symbol, flagTimes[0], int(dt.now().timestamp()-86400), int(dt.now().timestamp())))
 
-data = r.json()['data']
-biggerSymbol = 0
+            historyPrices = getHistoryPrices(historyRequest)
 
-for item in data:
-    symbolLength = len(item['symbol'])
+            momentRequest = requests.get(
+                "https://api.novadax.com/v1/market/ticker?symbol={}".format(symbol))
 
-    if symbolLength > biggerSymbol:
-        biggerSymbol = symbolLength
-
-for item in data:
-    price = item['ask']
-
-    symbol = item['symbol']
-    symbolLength = len(symbol)
-
-    print("Symbol: ", symbol, "{}|  Actual price:".format(
-        " "*(biggerSymbol-symbolLength) if symbolLength < biggerSymbol else ""), price)
-
-
-historyRequest = requests.get("https://api.novadax.com/v1/market/kline/history?symbol={}&unit={}&from={}&to={}".format(
-    flagSymbol, flagTime, int(dt.now().timestamp()-86400), int(dt.now().timestamp())))
-
-historyPrices = getHistoryPrices(historyRequest)
-
-print(getMovingAverage(historyPrices, 10))
+            data = momentRequest.json()['data']
+            print(data)
+        except Exception:
+            print("Oops, there was a problem. Exiting...")
+            sys.exit(1)
