@@ -2,12 +2,24 @@ import requests
 import json
 import time
 import sys
+import getopt
 from datetime import datetime as dt
 from proceduralMethods import *
 
 flagSymbols = ["BTC_BRL"]
 flagTimes = ["ONE_HOU"]
 movingAverageWindows = [5, 10, 30, 60, 80]
+
+options, remaining = getopt.gnu_getopt(
+    sys.argv[1:], 's:t:w:', ['symbols=', 'times=', 'windows='])
+
+for opt, arg in options:
+    if opt in ('-s', '--symbols'):
+        flagSymbols = arg.split(',')
+    elif opt in ('-t', '--times'):
+        flagTimes = arg.split(',')
+    elif opt in ('-w', '--windows'):
+        movingAverageWindows = list(map(int, arg.split(',')))
 
 while(1):
     time.sleep(1)
