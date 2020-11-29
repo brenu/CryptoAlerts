@@ -16,3 +16,14 @@ def getMovingAverage(prices, window):
     movingAverage = sum(separatedPrices) / window
 
     return movingAverage
+
+
+def verifyCrossedMAs(symbol, history, presentPrice, movingAverageWindows):
+    for window in movingAverageWindows:
+        movingAverage = getMovingAverage(history, window)
+        if movingAverage < presentPrice and movingAverage > history[-1]:
+            print("O ativo {} cruzou a media móvel de {} para cima".format(
+                symbol, window))
+        elif movingAverage > presentPrice and movingAverage < history[-1]:
+            print("O ativo {} cruzou a media móvel de {} para baixo".format(
+                symbol, window))

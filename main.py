@@ -14,15 +14,18 @@ while(1):
     for symbol in flagSymbols:
         try:
             historyRequest = requests.get("https://api.novadax.com/v1/market/kline/history?symbol={}&unit={}&from={}&to={}".format(
-                symbol, flagTimes[0], int(dt.now().timestamp()-86400), int(dt.now().timestamp())))
+                symbol, flagTimes[0], int(dt.now().timestamp()-86400*30), int(dt.now().timestamp())))
 
             historyPrices = getHistoryPrices(historyRequest)
 
             momentRequest = requests.get(
                 "https://api.novadax.com/v1/market/ticker?symbol={}".format(symbol))
 
-            data = momentRequest.json()['data']
-            print(data)
-        except Exception:
-            print("Oops, there was a problem. Exiting...")
+            momentData = momentRequest.json()['data']
+
+            verifyCrossedMAs(symbol, historyPrices, float(
+                momentData["ask"]), movingAverageWindows)
+
+        except NameError:
+            print("Oops, there was a problem. Exiting...", NameError)
             sys.exit(1)
