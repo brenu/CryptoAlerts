@@ -53,14 +53,14 @@ while(1):
                     crossedMAs = verifyCrossedMAs(historyPrices, float(
                         momentData["ask"]), window)
 
-                    if crossedMAs == 1 and alertsRegister[symbol][window] != 1:
+                    if crossedMAs == 1 and alertsRegister[symbol][window].alertDirection != 1:
                         print("O ativo {} cruzou a media móvel de {} para cima no gráfico {}".format(
                             symbol, window, flagTime))
-                        alertsRegister[window] = 1
-                    elif crossedMAs == -1 and alertsRegister[symbol][window] != 1:
+                        alertsRegister[symbol][window].alertDirection = 1
+                    elif crossedMAs == -1 and alertsRegister[symbol][window].alertDirection != 1:
                         print("O ativo {} cruzou a media móvel de {} para baixo no gráfico {}".format(
                             symbol, window, flagTime))
-                        alertsRegister[window] = -1
+                        alertsRegister[symbol][window].alertDirection = -1
             except NameError:
                 print("Oops, there was a problem. Exiting...", NameError)
                 sys.exit(1)
