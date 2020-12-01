@@ -18,12 +18,11 @@ def getMovingAverage(prices, window):
     return movingAverage
 
 
-def verifyCrossedMAs(symbol, flagTime, history, presentPrice, movingAverageWindows):
-    for window in movingAverageWindows:
-        movingAverage = getMovingAverage(history, window)
-        if movingAverage < presentPrice and movingAverage > history[-1]:
-            print("O ativo {} cruzou a media móvel de {} para cima no gráfico {}".format(
-                symbol, window, flagTime))
-        elif movingAverage > presentPrice and movingAverage < history[-1]:
-            print("O ativo {} cruzou a media móvel de {} para baixo no gráfico {}".format(
-                symbol, window, flagTime))
+def verifyCrossedMAs(history, presentPrice, window):
+    movingAverage = getMovingAverage(history, window)
+    if movingAverage < presentPrice and movingAverage > history[-1]:
+        return 1
+    elif movingAverage > presentPrice and movingAverage < history[-1]:
+        return -1
+    else:
+        return 0

@@ -6,9 +6,16 @@ import getopt
 from datetime import datetime as dt
 from proceduralMethods import *
 
+
+class AlertStorage:
+    def __init__(self, alertType, alertDirection):
+        self.type = alertType
+        self.alertDirection = alertDirection
+
+
 flagSymbols = ["BTC_BRL"]
 flagTimes = ["ONE_HOU"]
-movingAverageWindows = [5, 10, 30, 60, 80]
+movingAverageWindows = [9]
 
 options, remaining = getopt.gnu_getopt(
     sys.argv[1:], 's:t:w:', ['symbols=', 'times=', 'windows='])
@@ -20,6 +27,12 @@ for opt, arg in options:
         flagTimes = arg.split(',')
     elif opt in ('-w', '--windows'):
         movingAverageWindows = list(map(int, arg.split(',')))
+
+alertsRegister = {}
+for symbol in flagSymbols:
+    alertsRegister[symbol] = {}
+    for window in movingAverageWindows:
+        alertsRegister[symbol][window] = AlertStorage('MA', 0)
 
 while(1):
     time.sleep(1)
@@ -36,9 +49,18 @@ while(1):
 
                 momentData = momentRequest.json()['data']
 
-                verifyCrossedMAs(symbol, flagTime, historyPrices, float(
-                    momentData["ask"]), movingAverageWindows)
+                for window in movingAverageWindows:
+                    crossedMAs = verifyCrossedMAs(historyPrices, float(
+                        momentData["ask"]), window)
 
+                    if crossedMAs == 1 and alertsRegister[symbol][window] != 1:
+                        print("O ativo {} cruzou a media móvel de {} para cima no gráfico {}".format(
+                            symbol, window, flagTime))
+                        alertsRegister[window] = 1
+                    elif crossedMAs == -1 and alertsRegister[symbol][window] != 1:
+                        print("O ativo {} cruzou a media móvel de {} para baixo no gráfico {}".format(
+                            symbol, window, flagTime))
+                        alertsRegister[window] = -1
             except NameError:
                 print("Oops, there was a problem. Exiting...", NameError)
                 sys.exit(1)
