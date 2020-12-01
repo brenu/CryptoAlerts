@@ -19,7 +19,7 @@ flagTimes = ["ONE_HOU"]
 movingAverageWindows = [9]
 
 options, remaining = getopt.gnu_getopt(
-    sys.argv[1:], 's:t:w:', ['symbols=', 'times=', 'windows='])
+    sys.argv[1:], 's:t:w:h', ['symbols=', 'times=', 'windows=', 'help='])
 
 for opt, arg in options:
     if opt in ('-s', '--symbols'):
@@ -28,6 +28,9 @@ for opt, arg in options:
         flagTimes = arg.split(',')
     elif opt in ('-w', '--windows'):
         movingAverageWindows = list(map(int, arg.split(',')))
+    elif opt in ('-h', '--help'):
+        printHelp()
+        sys.exit(1)
 
 alertsRegister = {}
 for symbol in flagSymbols:
