@@ -5,6 +5,7 @@ import sys
 import getopt
 from datetime import datetime as dt
 from proceduralMethods import *
+import subprocess as s
 
 
 class AlertStorage:
@@ -54,12 +55,12 @@ while(1):
                         momentData["ask"]), window)
 
                     if crossedMAs == 1 and alertsRegister[symbol][window].alertDirection != 1:
-                        print("O ativo {} cruzou a media móvel de {} para cima no gráfico {}".format(
-                            symbol, window, flagTime))
+                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', 'CryptoAlerts', "<span color='#ddd' font='16px'><i><b>O ativo {} cruzou a media móvel de {} para cima no gráfico {}</b></i></span>".format(
+                            symbol, window, flagTime)])
                         alertsRegister[symbol][window].alertDirection = 1
                     elif crossedMAs == -1 and alertsRegister[symbol][window].alertDirection != 1:
-                        print("O ativo {} cruzou a media móvel de {} para baixo no gráfico {}".format(
-                            symbol, window, flagTime))
+                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', 'CryptoAlerts', "<span color='#ddd' font='16px'><b>O ativo {} cruzou a media móvel de {} para baixo no gráfico {}</b></span>".format(
+                            symbol, window, flagTime)])
                         alertsRegister[symbol][window].alertDirection = -1
             except NameError:
                 print("Oops, there was a problem. Exiting...", NameError)
