@@ -50,4 +50,5 @@ def printHelp():
     print("-h or --help       List commands and examples\n")
     print("-s or --symbols    Set the verified cryptocurrencies using Novadax pattern\n                   and separating them using commas.\n                   Ex: CryptoAlerts.py -s BTC_BRL,ETH_BRL,OMG_EUR,ADA_USD\n")
     print("-t or --times      Set the times you would like to be advertised of, by\n                   by using Novadax pattern and separating using commas.\n                   Ex: CryptoAlerts.py -t FIFTEEN_MIN,ONE_HOU,ONE_DAY\n")
-    print("-w or --windows    Set the windows you generally use for moving averages,\n                   and separate them using commas.\n                   Ex: CryptoAlerts.py -w 9,21,60,80")
+    print("-w or --windows    Set the windows you generally use for moving averages,\n                   and separate them using commas.\n                   Ex: CryptoAlerts.py -w 9,21,60,80\n")
+    print("-l or --limits     Set limit prices you would like to be advertised of,\n                   separating them using commas.\n                   Ex: CryptoAlerts.py -l ETH_BRL,1300.18,BTC_BRL,110520.50")

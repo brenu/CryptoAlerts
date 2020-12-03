@@ -21,7 +21,7 @@ hasLimit = False
 limits = {}
 
 options, remaining = getopt.gnu_getopt(
-    sys.argv[1:], 's:t:w:h:l:', ['symbols=', 'times=', 'windows=', 'help=', 'limit='])
+    sys.argv[1:], 's:t:w:l:h', ['symbols=', 'times=', 'windows=', 'help=', 'limit='])
 
 for opt, arg in options:
     if opt in ('-s', '--symbols'):
