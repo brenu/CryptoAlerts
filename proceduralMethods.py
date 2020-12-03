@@ -18,6 +18,15 @@ def getMovingAverage(prices, window):
     return movingAverage
 
 
+def verifyLimit(limit, presentPrice, lastPrice):
+    if limit > lastPrice and limit < presentPrice:
+        return 1
+    elif limit < lastPrice and limit > presentPrice:
+        return 1
+    else:
+        return 0
+
+
 def verifyCrossedMAs(history, presentPrice, window):
     movingAverage = getMovingAverage(history, window)
     if movingAverage < presentPrice and movingAverage > history[-1]:
