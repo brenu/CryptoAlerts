@@ -66,8 +66,9 @@ while(1):
 
                 momentData = momentRequest.json()['data']
 
-                wasLimitCrossed = verifyLimit(
-                    limits[symbol], float(momentData['ask']), float(historyPrices[-1]))
+                if symbol in limits:
+                    wasLimitCrossed = verifyLimit(
+                        limits[symbol], float(momentData['ask']), float(historyPrices[-1]))
 
                 if wasLimitCrossed == 1 and alertsRegister[symbol]["limit"].alertDirection == 0:
                     s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><i><b>O ativo {} cruzou o limite de {}</b></i></span>".format(
