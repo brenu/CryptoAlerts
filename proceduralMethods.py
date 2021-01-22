@@ -1,4 +1,8 @@
 import math
+import subprocess as s
+import os
+
+imagePath = os.path.abspath("logo.png")
 
 
 def getHistoryPrices(rawData):
@@ -65,6 +69,11 @@ def verifyCrossedMAs(history, presentPrice, window):
         return -1
     else:
         return 0
+
+
+def showAlert(message):
+    s.call(['notify-send', '-i', imagePath, '-t', '10000', 'CryptoAlerts',
+            "<span color='#ddd' font='16px'><b>{}</b></span>".format(message)])
 
 
 def printBanner():

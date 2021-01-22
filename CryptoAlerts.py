@@ -82,20 +82,20 @@ while(1):
                         historyPrices, float(momentData['ask']), bollingerPeriods)
 
                     if wereBollingerBandsCrossed == 1 and alertsRegister[symbol]["bollingerBands"].alertDirection != 1:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><i><b>O ativo {} cruzou a BB superior de {} para cima no gráfico {}</b></i></span>".format(
-                            symbol, bollingerPeriods, flagTime)])
+                        showAlert("O ativo {} cruzou a BB superior de {} para cima no gráfico {}".format(
+                            symbol, bollingerPeriods, flagTime))
                         alertsRegister[symbol]["bollingerBands"].alertDirection = 1
                     elif wereBollingerBandsCrossed == -1 and alertsRegister[symbol]["bollingerBands"].alertDirection != -1:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><b>O ativo {} cruzou a BB superior de {} para baixo no gráfico {}</b></span>".format(
-                            symbol, bollingerPeriods, flagTime)])
+                        showAlert("O ativo {} cruzou a BB superior de {} para baixo no gráfico {}".format(
+                            symbol, bollingerPeriods, flagTime))
                         alertsRegister[symbol]["bollingerBands"].alertDirection = -1
                     elif wereBollingerBandsCrossed == 2 and alertsRegister[symbol]["bollingerBands"].alertDirection != -2:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><b>O ativo {} cruzou a BB inferior de {} para cima no gráfico {}</b></span>".format(
-                            symbol, bollingerPeriods, flagTime)])
+                        showAlert("O ativo {} cruzou a BB inferior de {} para cima no gráfico {}".format(
+                            symbol, bollingerPeriods, flagTime))
                         alertsRegister[symbol]["bollingerBands"].alertDirection = 2
                     elif wereBollingerBandsCrossed == -2 and alertsRegister[symbol]["bollingerBands"].alertDirection != -2:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><b>O ativo {} cruzou a BB inferior de {} para baixo no gráfico {}</b></span>".format(
-                            symbol, bollingerPeriods, flagTime)])
+                        showAlert("O ativo {} cruzou a BB inferior de {} para baixo no gráfico {}".format(
+                            symbol, bollingerPeriods, flagTime))
                         alertsRegister[symbol]["bollingerBands"].alertDirection = -2
 
                 if symbol in limits:
@@ -103,20 +103,20 @@ while(1):
                         limits[symbol], float(momentData['ask']), float(historyPrices[-1]))
 
                     if wasLimitCrossed == 1 and alertsRegister[symbol]["limit"].alertDirection == 0:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><i><b>O ativo {} cruzou o limite de {}</b></i></span>".format(
-                                symbol, limits[symbol])])
+                        showAlert("O ativo {} cruzou o limite de {}".format(
+                            symbol, limits[symbol]))
                         alertsRegister[symbol]["limit"].alertDirection = 1
 
                 for window in movingAverageWindows:
                     crossedMAs = verifyCrossedMAs(historyPrices, float(
                         momentData["ask"]), window)
                     if crossedMAs == 1 and alertsRegister[symbol]["windows"][window].alertDirection != 1:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><i><b>O ativo {} cruzou a media móvel de {} para cima no gráfico {}</b></i></span>".format(
-                            symbol, window, flagTime)])
+                        showAlert("O ativo {} cruzou a media móvel de {} para cima no gráfico {}".format(
+                            symbol, window, flagTime))
                         alertsRegister[symbol]["windows"][window].alertDirection = 1
                     elif crossedMAs == -1 and alertsRegister[symbol]["windows"][window].alertDirection != -1:
-                        s.call(['notify-send', '-i', '/home/exceed/Documents/projetos/CryptoAlerts/here.png', '-t', '10000', 'CryptoAlerts', "<span color='#ddd' font='16px'><b>O ativo {} cruzou a media móvel de {} para baixo no gráfico {}</b></span>".format(
-                            symbol, window, flagTime)])
+                        showAlert("O ativo {} cruzou a media móvel de {} para baixo no gráfico {}".format(
+                            symbol, window, flagTime))
                         alertsRegister[symbol]["windows"][window].alertDirection = -1
             except NameError:
                 print("Oops, there was a problem. Exiting...", NameError)
