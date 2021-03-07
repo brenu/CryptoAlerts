@@ -59,6 +59,14 @@ Pode ser indicado pelas flags -l ou --limits. Determina preços limite às rela�
 foo@bar:~$ python3 CryptoAlerts.py -l BTC_BRL,105439.50,ETH_BRL,3400
 ```
 
+### Bollinger Bands
+
+Pode ser indicado pelas flags -b ou --bollinger. Determina um número de períodos específico para análise das bandas de bollinger, caso deseje monitorar os ativos utilizando tal ferramenta.
+
+```console
+foo@bar:~$ python3 CryptoAlerts.py -b 20
+```
+
 ## Progress
 
 No presente momento, CryptoAlerts executa quase todas as funções propostas, exceto identificar automaticamente suportes e resistências e o alertar sobre isso.
